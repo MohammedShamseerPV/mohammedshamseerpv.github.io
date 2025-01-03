@@ -1,0 +1,55 @@
+{
+    "profile": {
+      "name": "Mohammed Shamseer",
+      "description": "Passionate developer with expertise in backend, frontend, IoT, and streaming solutions.",
+      "socials": {
+        "linkedin": "https://linkedin.com",
+        "github": "https://github.com",
+        "medium": "https://medium.com",
+        "stackoverflow": "https://stackoverflow.com"
+      }
+    },
+    "skills": [
+      "Flutter",
+      "Node.js",
+      "Node.js Express",
+      "MongoDB",
+      "Firebase",
+      "Python",
+      "Arduino",
+      "ESP32",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Bootstrap",
+      "FFmpeg",
+      "RTSP Video Streaming & Recording"
+    ],
+    "projects": [
+      {
+        "title": "Zarax Studio",
+        "description": "A Node.js application for downloading videos from all social platforms and handling RTSP/M3U8 streams.",
+        "technologies": ["Node.js", "FFmpeg", "RTSP"],
+        "link": "https://github.com/zarax-studio"
+      },
+      {
+        "title": "IoT Smart Home",
+        "description": "Home automation system using ESP32 and Arduino to control appliances remotely.",
+        "technologies": ["Arduino", "ESP32", "Flutter"],
+        "link": "https://github.com/smart-home-project"
+      },
+      {
+        "title": "Video Stream Recorder",
+        "description": "RTSP video stream recorder and re-encoder using FFmpeg and Node.js.",
+        "technologies": ["Node.js", "FFmpeg", "RTSP"],
+        "link": "https://github.com/stream-recorder"
+      },
+      {
+        "title": "Portfolio Website",
+        "description": "A responsive personal portfolio showcasing projects and skills.",
+        "technologies": ["HTML", "CSS", "Bootstrap", "JavaScript"],
+        "link": "https://github.com/portfolio-website"
+      }
+    ]
+  }
+  

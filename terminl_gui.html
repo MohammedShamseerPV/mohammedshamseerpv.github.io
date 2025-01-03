@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Terminal Web App</title>
+
+    <!-- TailwindCSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- xterm.js 5.5.0 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.5.0/xterm.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.5.0/xterm.min.js"></script>
+
+    <!-- FitAddon for xterm.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.5.0/addons/fit/fit.min.js"></script>
+
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #1e1e1e;
+            color: white;
+        }
+
+        /* Ensure the terminal has a maximum width and height */
+        #terminal {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #1e1e1e;
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center">
+
+    <!-- Terminal Container -->
+    <div class="w-full max-w-4xl p-4">
+        <div id="terminal" class="h-96"></div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // Initialize the Terminal and FitAddon from xterm.js
+            const term = new XTerm.Terminal({
+                cursorBlink: true,
+                rows: 20,
+                cols: 80
+            });
+
+            // Initialize the FitAddon
+            const fitAddon = new XTerm.FitAddon();
+            term.loadAddon(fitAddon);
+
+            // Attach the terminal to the div with id 'terminal'
+            term.open(document.getElementById('terminal'));
+
+            // Fit terminal to available space
+            fitAddon.fit();
+
+            // Commands to simulate a file system
+            let files = {};
+
+            // Function to simulate the 'prompt'
+            term.prompt = () => {
+                term.write('\r\n$ ');
+            };
+
+            // Handle user input and simulate file system operations
+            term.onData(data => {
+                if (data.charCodeAt(0) === 13) { // Enter key
+                    const command = term.buffer.active.getLine(term.buffer.active.cursorY).translateToString().trim();
+                    handleCommand(command);
+                    term.prompt();
+                } else if (data.charCodeAt(0) === 8) { // Backspace key
+                    term.write('\b \b');
+                } else {
+                    term.write(data);
+                }
+            });
+
+            // Handle Linux-like commands
+            function handleCommand(command) {
+                const args = command.split(' ');
+                const cmd = args[0];
+
+                switch (cmd) {
+                    case 'ls':
+                        listFiles();
+                        break;
+                    case 'mkdir':
+                        createDirectory(args);
+                        break;
+                    case 'touch':
+                        createFile(args);
+                        break;
+                    case 'rm':
+                        deleteFile(args);
+                        break;
+                    case 'cat':
+                        viewFile(args);
+                        break;
+                    case 'ping':
+                        ping(args);
+                        break;
+                    case 'exit':
+                        term.write("\r\nGoodbye!\r\n");
+                        break;
+                    default:
+                        term.write(`\r\n${cmd}: command not found\r\n`);
+                }
+            }
+
+            // List files in the "filesystem" (localStorage in this case)
+            function listFiles() {
+                const fileNames = Object.keys(files);
+                if (fileNames.length === 0) {
+                    term.write("\r\nNo files found.\r\n");
+                } else {
+                    term.write("\r\n" + fileNames.join("\n") + "\r\n");
+                }
+            }
+
+            // Create a directory (simulate it in localStorage)
+            function createDirectory(args) {
+                const dirName = args[1];
+                if (!dirName) {
+                    term.write("\r\nmkdir: missing operand\r\n");
+                } else {
+                    if (!files[dirName]) {
+                        files[dirName] = { type: 'directory', contents: [] };
+                        term.write(`\r\nDirectory '${dirName}' created\r\n`);
+                    } else {
+                        term.write(`\r\nmkdir: cannot create directory '${dirName}': File exists\r\n`);
+                    }
+                }
+            }
+
+            // Create a file (simulate it in localStorage)
+            function createFile(args) {
+                const fileName = args[1];
+                if (!fileName) {
+                    term.write("\r\ntouch: missing operand\r\n");
+                } else {
+                    if (!files[fileName]) {
+                        files[fileName] = { type: 'file', content: '' };
+                        term.write(`\r\nFile '${fileName}' created\r\n`);
+                    } else {
+                        term.write(`\r\ntouch: cannot create file '${fileName}': File exists\r\n`);
+                    }
+                }
+            }
+
+            // Delete a file (simulate it in localStorage)
+            function deleteFile(args) {
+                const fileName = args[1];
+                if (!fileName) {
+                    term.write("\r\nrm: missing operand\r\n");
+                } else {
+                    if (files[fileName]) {
+                        delete files[fileName];
+                        term.write(`\r\nFile '${fileName}' deleted\r\n`);
+                    } else {
+                        term.write(`\r\nrm: cannot remove '${fileName}': No such file\r\n`);
+                    }
+                }
+            }
+
+            // View content of a file (simulate reading file content)
+            function viewFile(args) {
+                const fileName = args[1];
+                if (!fileName) {
+                    term.write("\r\ncat: missing operand\r\n");
+                } else {
+                    const file = files[fileName];
+                    if (file && file.type === 'file') {
+                        term.write(`\r\n${file.content}\r\n`);
+                    } else {
+                        term.write(`\r\ncat: ${fileName}: No such file\r\n`);
+                    }
+                }
+            }
+
+            // Simulate ping (simple delay to mimic network operation)
+            function ping(args) {
+                const target = args[1] || 'localhost';
+                term.write(`\r\nPinging ${target}... (simulate response)\r\n`);
+                setTimeout(() => {
+                    term.write(`\r\nPing successful: ${target} is reachable\r\n`);
+                }, 1000);
+            }
+
+            // Initialize prompt
+            term.prompt();
+        };
+    </script>
+</body>
+</html>

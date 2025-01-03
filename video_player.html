@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Gallery</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.8/dist/plyr.css" />
+</head>
+<body>
+
+    <!-- Main Video Player (YouTube Video) -->
+    <div class="mb-3 rounded-lg overflow-hidden shadow-lg">
+        <div class="plyr__video-embed" id="youtube-video" data-plyr-provider="youtube" data-plyr-embed-id="7WABxk9DAuw">
+            <!-- This will be replaced by the actual YouTube embed iframe by Plyr -->
+        </div>
+    </div>
+
+    <!-- Plyr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.8/dist/plyr.polyfilled.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Plyr for the YouTube video
+            const player = new Plyr('#youtube-video', {
+                autoplay: true,
+                controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+            });
+        });
+    </script>
+
+</body>
+</html>

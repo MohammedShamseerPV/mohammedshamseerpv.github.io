@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal with Upload and Open Feature</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Consolas, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #66ff66;
+        }
+
+        .terminal {
+            width: 80%;
+            height: 80%;
+            max-width: 900px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .input-line {
+            color: #66ff66;
+            display: flex;
+            align-items: center;
+        }
+
+        .output-line {
+            color: #ffffff;
+        }
+
+        .terminal input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: inherit;
+            width: 100%;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 0;
+        }
+
+        .prompt {
+            color: #66ff66;
+            margin-right: 10px;
+        }
+
+        #output {
+            margin-bottom: 10px;
+        }
+
+         /* Overlay (Background for Modal) */
+         .popup-container {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); /* Darkened background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px); /* Glass effect */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Modal Content with Glass Effect */
+        .popup-content {
+            background: rgba(255, 255, 255, 0); /* Transparent background */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Soft shadow */
+            backdrop-filter: blur(19.5px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(19.5px); /* Safari fix */
+            border-radius: 10px; /* Rounded corners */
+            /* padding: 30px; */
+            width: 90%;
+            /* max-width: 600px; */
+            border: 1px solid rgba(255, 255, 255, 0.18); /* Light border */
+            transition: transform 0.3s ease-in-out;
+            transform: scale(0.8); /* Initial scale for smooth animation */
+            text-align: center;
+        }
+
+        /* Close Button (Modern Rectangular Style) */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Modal Transition Effect */
+        .popup-container.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-content.show {
+            transform: scale(1); /* Smooth scaling effect */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .popup-content {
+                max-width: 80%; /* Adjust max-width on smaller screens */
+                padding: 20px;
+            }
+
+            .close-btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .popup-content {
+                max-width: 90%; /* Further reduce width on very small screens */
+                padding: 15px;
+            }
+
+            .close-btn {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Media Content */
+        #media-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        #media-content video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+       
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #66ff66;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: none;
+        }
+
+        .footer .copyright {
+            margin-top: 10px;
+        }
+
+        /* Upload Popup */
+        #upload-popup .popup-content {
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+        }
+
+        .upload-btn {
+            background-color: #66ff66;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #4dff4d;
+        }
+
+        .upload-feedback {
+            margin-top: 10px;
+            color: #66ff66;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Terminal Powered by Mohammed Shamseer</h1>
+    <p><a href="https://mohammed-shamseerpv.netlify.app/">https://mohammed-shamseerpv.netlify.app</a></p>
+</div>
+
+<div class="terminal container" id="terminal">
+    <div id="output"></div>
+    <div class="input-line">
+        <span class="prompt" id="prompt">shamseer@linux:~$</span>
+        <input type="text" id="commandInput" autofocus />
+    </div>
+</div>
+
+<div class="footer">
+    <p>Follow me:</p>
+    <a href="https://www.linkedin.com/in/mohammed-shamseer-pv/" target="_blank" title="LinkedIn">
+        <i class="fa-brands fa-linkedin fa-lg"></i>
+    </a>
+    <a href="https://github.com/mohammedshamseerpvofficial" target="_blank" title="GitHub">
+    <i class="fa-brands fa-github fa-lg"></i>
+    </a>
+    <a href="https://stackoverflow.com/users/21303052/mohammed-shamseerpv" target="_blank" title="Stack Overflow">
+
+        <i class="fa-brands fa-stack-overflow  fa-lg"></i>
+    </a>
+    <a href="https://mohammedshamseerpv.medium.com/" target="_blank" title="medium">
+        <i class="fa-brands fa-medium fa-lg"></i>
+    </a>
+
+    <div class="copyright">
+        <p>&copy; 2024 Mohammed Shamseer. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- Popup for displaying files (image, video, etc.) -->
+<div id="popup" class="popup-container">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">Esc</button>
+        <div id="media-content"></div>
+    </div>
+</div>
+
+<!-- File upload form -->
+<div id="upload-popup" class="popup-container">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closeUploadPopup()">X</button>
+        <h3>Upload File</h3>
+        <input type="file" id="file-input" />
+        <button class="upload-btn" onclick="uploadFile()">Upload</button>
+        <div id="upload-feedback"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    class FileSystem {
+        constructor() {
+            this.root = new Directory('root');
+            this.currentDir = this.root;
+            this.addFileToFolder(this.root, 'flutter_book.pdf', 'https://digilib.stekom.ac.id/assets/dokumen/ebook/feb_3872ce7467cbdc7beedfcdc12b2b607b0ba36429_1649057575.pdf');
+            this.addFileToFolder(this.root, 'video.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
+            this.addFileToFolder(this.root, 'image.jpeg', 'https://plus.unsplash.com/premium_photo-1681422570054-9ae5b8b03e46?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dW5zcGxhc2glMjBhcHB8ZW58MHx8MHx8fDA%3D');
+            this.addFileToFolder(this.root, 'index.html', '<h1>Welcome to the file explorer!</h1><p>Click to explore content.</p>');
+            this.initializeFileSystem();
+        }
+
+        initializeFileSystem() {
+            const desktop = new Directory('Desktop', this.root);
+            const downloads = new Directory('Downloads', this.root);
+            const shamseer = new Directory('shamseer', this.root);
+
+            this.root.addItem(desktop);
+            this.root.addItem(downloads);
+            this.root.addItem(shamseer);
+
+            this.addFileToFolder(desktop, 'image.jpeg', 'https://plus.unsplash.com/premium_photo-1681422570054-9ae5b8b03e46?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dW5zcGxhc2glMjBhcHB8ZW58MHx8MHx8fDA%3D');
+            this.addFileToFolder(desktop, 'video.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
+            this.addFileToFolder(shamseer, 'notes.txt', 'This is a note from Shamseer!');
+        }
+
+        addFileToFolder(folder, fileName, content) {
+            const newFile = new File(fileName, content);
+            folder.addItem(newFile);
+        }
+
+        changeDirectory(folderName) {
+            if (folderName === '..') {
+                if (this.currentDir.parent) {
+                    this.currentDir = this.currentDir.parent;
+                    return `Changed directory to ${this.currentDir.name}`;
+                }
+                return `Error: Already at root directory.`;
+            }
+
+            const folder = this.currentDir.getFolder(folderName);
+            if (folder) {
+                this.currentDir = folder;
+                return `Changed directory to ${folder.name}`;
+            }
+
+            return `Error: Directory "${folderName}" does not exist.`;
+        }
+
+        listContents() {
+            const contents = this.currentDir.listContents();
+            return contents.length > 0 ? contents.join(' ') : 'No files or folders.';
+        }
+
+        createFolder(folderName) {
+            if (this.currentDir.getFolder(folderName)) {
+                return `Error: Directory "${folderName}" already exists.`;
+            }
+            const newFolder = new Directory(folderName, this.currentDir);
+            this.currentDir.addItem(newFolder);
+            return `Directory "${folderName}" created.`;
+        }
+
+        createFile(fileName) {
+            if (this.currentDir.getFile(fileName)) {
+                return `Error: File "${fileName}" already exists.`;
+            }
+            const newFile = new File(fileName);
+            this.currentDir.addItem(newFile);
+            return `File "${fileName}" created.`;
+        }
+
+        openFile(fileName) {
+            const file = this.currentDir.getFile(fileName);
+            if (file) {
+                return file.open();
+            }
+            return `Error: File "${fileName}" does not exist.`;
+        }
+
+        removeFolder(folderName) {
+            const folder = this.currentDir.getFolder(folderName);
+            if (folder) {
+                const index = this.currentDir.items.indexOf(folder);
+                this.currentDir.items.splice(index, 1);
+                return `Directory "${folderName}" removed.`;
+            }
+            return `Error: Directory "${folderName}" does not exist.`;
+        }
+
+        getCurrentDirectoryPath() {
+            let path = this.currentDir.name;
+            let parent = this.currentDir.parent;
+            while (parent) {
+                path = parent.name + '/' + path;
+                parent = parent.parent;
+            }
+            return '/' + path;
+        }
+
+        uploadFile(fileName, fileContent) {
+            const newFile = new File(fileName, fileContent);
+            this.currentDir.addItem(newFile);
+        }
+    }
+
+    class Directory {
+        constructor(name, parent = null) {
+            this.name = name;
+            this.parent = parent;
+            this.items = [];
+        }
+
+        addItem(item) {
+            this.items.push(item);
+        }
+
+        getFolder(folderName) {
+            return this.items.find(item => item.name === folderName && item instanceof Directory);
+        }
+
+        getFile(fileName) {
+            return this.items.find(item => item.name === fileName && item instanceof File);
+        }
+
+        listContents() {
+            return this.items.map(item => item.name);
+        }
+    }
+
+    class File {
+        constructor(name, content = '') {
+            this.name = name;
+            this.content = content;
+        }
+
+        open() {
+            if (
+                this.name.endsWith('.mp4') || 
+  this.name.endsWith('.mov') || 
+  this.name.endsWith('.avi') || 
+  this.name.endsWith('.mkv') || 
+  this.name.endsWith('.webm') || 
+  this.name.endsWith('.flv') || 
+  this.name.endsWith('.wmv') ||
+  this.name.endsWith('.hevc')
+            ) {
+                return `<video controls><source src="${this.content}" type="video/mp4">Your browser does not support the video tag.</video>`;
+            } else if (
+                this.name.endsWith('.jpg') || 
+  this.name.endsWith('.jpeg') || 
+  this.name.endsWith('.png') || 
+  this.name.endsWith('.svg') || 
+  this.name.endsWith('.gif') || 
+  this.name.endsWith('.bmp') || 
+  this.name.endsWith('.tiff') || 
+  this.name.endsWith('.webp')
+            ) {
+                return `<img src="${this.content}" alt="${this.name}" />`;
+            } else if (
+                this.name.endsWith('.txt') || 
+  this.name.endsWith('.csv') || 
+  this.name.endsWith('.json') || 
+  this.name.endsWith('.xml') || 
+  this.name.endsWith('.html') || 
+  this.name.endsWith('.md') || 
+  this.name.endsWith('.pdf') || 
+  this.name.endsWith('.log')
+            ) {
+                return `<pre>${this.content}</pre>`;
+            }
+            return `Error: Unsupported file type.`;
+        }
+    }
+
+    const fs = new FileSystem();
+
+    function updateOutput(text) {
+        const outputElement = document.getElementById('output');
+        outputElement.innerHTML += `<div class="output-line">${text}</div>`;
+        outputElement.scrollTop = outputElement.scrollHeight;
+    }
+
+    function handleCommand(command) {
+        const [cmd, ...args] = command.trim().split(' ');
+
+        if (cmd === 'help') {
+            updateOutput(`Available Commands:
+- mkdir <folder_name>: Create a new folder
+- rmdir <folder_name>: Remove a folder
+- touch <file_name>: Create a new file
+- rm <file_name>: Remove a file
+- ls: List contents of the current folder
+- cd <folder_name>: Change directory
+- pwd: Show the current directory
+- open <file_name>: Open a file (image/video/text)
+- clear: Clear the terminal
+- upload <file_name>: Upload a file`);
+        } else if (cmd === 'mkdir') {
+            const folderName = args[0];
+            updateOutput(fs.createFolder(folderName));
+        } else if (cmd === 'rmdir') {
+            const folderName = args[0];
+            updateOutput(fs.removeFolder(folderName));
+        } else if (cmd === 'touch') {
+            const fileName = args[0];
+            updateOutput(fs.createFile(fileName));
+        } else if (cmd === 'ls') {
+            updateOutput(fs.listContents());
+        } else if (cmd === 'cd') {
+            const folderName = args[0];
+            updateOutput(fs.changeDirectory(folderName));
+        } else if (cmd === 'pwd') {
+            updateOutput(fs.getCurrentDirectoryPath());
+        } else if (cmd === 'open') {
+            const fileName = args[0];
+            updateOutput(fs.openFile(fileName));
+            openFilePopup(fileName);
+        } else if (cmd === 'clear') {
+            document.getElementById('output').innerHTML = '';
+        } else if (cmd === 'upload') {
+            showUploadPopup();
+        } else {
+            updateOutput(`bash: command not found: ${command}`);
+        }
+
+        document.getElementById('prompt').innerText = `shamseer@linux:${fs.getCurrentDirectoryPath()}$`;
+    }
+
+    function openFilePopup(fileName) {
+        const file = fs.currentDir.getFile(fileName);
+        if (file) {
+            const mediaContent = document.getElementById('media-content');
+            if (
+ file.name.endsWith('.mp4') || 
+  file.name.endsWith('.mov') || 
+  file.name.endsWith('.avi') || 
+  file.name.endsWith('.mkv') || 
+  file.name.endsWith('.webm') || 
+  file.name.endsWith('.flv') || 
+  file.name.endsWith('.wmv') ||
+  file.name.endsWith('.hevc')
+            ) {
+                mediaContent.innerHTML = `<video autoplay controls><source src="${file.content}" >Your browser does not support the video tag.</video>`;
+            } else if (
+ file.name.endsWith('.jpg') || 
+  file.name.endsWith('.jpeg') || 
+  file.name.endsWith('.png') || 
+  file.name.endsWith('.svg') || 
+  file.name.endsWith('.gif') || 
+  file.name.endsWith('.bmp') || 
+  file.name.endsWith('.tiff') || 
+  file.name.endsWith('.webp')
+            ) {
+                mediaContent.innerHTML = `<img src="${file.content}" alt="${file.name}" />`;
+            } else if (
+    file.name.endsWith('.txt') || 
+    file.name.endsWith('.csv') || 
+    file.name.endsWith('.json') || 
+    file.name.endsWith('.xml') || 
+    file.name.endsWith('.md') || 
+    file.name.endsWith('.log')
+  ) {
+    // Display the content in <pre> for proper formatting
+    mediaContent.innerHTML = `<pre>${file.content}</pre>`;
+  }
+
+  // HTML file: Render HTML content directly
+  else if (file.name.endsWith('.html')) {
+    mediaContent.innerHTML = file.content;
+  }
+
+  // PDF file: Display as an embedded PDF
+  else if (file.name.endsWith('.pdf')) {
+    mediaContent.innerHTML = `
+      <embed src="${file.content}" width="100%" height="600px" />
+    `;
+  }
+            document.getElementById('popup').style.display = 'flex';
+        }
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function showUploadPopup() {
+        document.getElementById('upload-popup').style.display = 'flex';
+    }
+
+    function closeUploadPopup() {
+        document.getElementById('upload-popup').style.display = 'none';
+    }
+
+    function uploadFile() {
+        const fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                fs.uploadFile(file.name, e.target.result);
+                document.getElementById('upload-feedback').innerHTML = `File "${file.name}" uploaded successfully.`;
+            };
+            reader.readAsDataURL(file); 
+        }
+    }
+
+    document.getElementById('commandInput').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            const command = this.value;
+            updateOutput(`<span class="prompt">shamseer@linux:${fs.getCurrentDirectoryPath()}$</span> ${command}`);
+            handleCommand(command);
+            this.value = '';
+        } else if (event.key === 'Tab') {
+            event.preventDefault();
+            const command = this.value.trim();
+            if (command) {
+                const [cmd, ...args] = command.split(' ');
+                if (cmd === 'cd') {
+                    // Handle tab-completion for folder names
+                    const completions = fs.currentDir.items.filter(item => item.name.startsWith(args[0]) && item instanceof Directory);
+                    if (completions.length === 1) {
+                        this.value = `cd ${completions[0].name}`;
+                    } else {
+                        updateOutput(completions.map(item => item.name).join(' '));
+                    }
+                }else if (cmd === 'open') {
+                // Handle tab-completion for file names
+                const completions = fs.currentDir.items.filter(item => item.name.startsWith(args[0]) && item instanceof File);
+                if (completions.length === 1) {
+                    this.value = `open ${completions[0].name}`;
+                } else {
+                    updateOutput(completions.map(item => item.name).join(' '));
+                }}
+            }
+        }
+    });
+
+
+        // Close the popup when the 'Esc' key is pressed
+        window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closePopup(); // Close modal if 'Esc' is pressed
+        }
+    });
+</script>
+
+</body>
+</html>

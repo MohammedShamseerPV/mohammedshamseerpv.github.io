@@ -1,0 +1,109 @@
+/* Glassmorphism and hover effects */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+  }
+  
+  .card img {
+    border-radius: 12px;
+  }
+  
+  body {
+    scroll-behavior: smooth;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+  }
+  
+
+
+
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+/* Contact Cards */
+.contact-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-card h3 {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contact-card i {
+  margin-right: 10px;
+  color: #007BFF;
+}
+
+.contact-card p {
+  color: #ddd;
+  margin: 10px 0;
+}
+
+.contact-card a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.contact-card a:hover {
+  text-decoration: underline;
+}
+
+/* Glowing effect on hover */
+.contact-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.5);
+}
+
+/* Map Section */
+.map-section {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.map-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.map-container {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}

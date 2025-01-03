@@ -1,0 +1,200 @@
+{
+    "skills": [
+      { "name": "Flutter", "icon": "fab fa-flutter", "description": "" ,"color":"#6565e0"},
+      { "name": "BLOC", "icon": "fa-solid fa-cube", "description": "","color":"#0084C1" },
+      { "name": "Node.js", "icon": "fab fa-node-js", "description": "" ,"color":"#008000"},
+
+      { "name": "MongoDB", "icon": "fas fa-database", "description": "" ,"color":"#469839" },
+      { "name": "Firebase", "icon": "fa-solid fa-fire", "description": "" ,"color":"#DC2C01"},
+      { "name": "Python", "icon": "fab fa-python", "description": "" ,"color":"#ffde57"},
+      { "name": "Arduino", "icon": "fas fa-microchip", "description": "" , "color":"#00969B"},
+      { "name": "ESP32", "icon": "fas fa-microchip", "description": "" ,"color":"#CD0A13" },
+      { "name": "HTML, CSS, JS, Bootstrap", "icon": "fab fa-html5", "description": "" ,"color":"#E64E28"},
+      { "name": "FFmpeg", "icon": "fas fa-video", "description": "" },
+      { "name": "RTSP Stream & Record", "icon": "fas fa-camera", "description": "" },
+      { "name": "Docker", "icon": "fa-brands fa-docker", "description": "" ,"color":"#2872F0"}
+    ],
+    "projects": [
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/mokz3.jpg", 
+        "title": "Photo Editor App ", 
+        "description": "APP | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/photo-editor-app?tab=readme-ov-file"
+      },
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/mokztext3.jpg", 
+        "title": "Flutter-OCR-APP", 
+        "description": "APP | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/flutter-OCR-app?tab=readme-ov-file"
+      },
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/petshop1.png", 
+        "title": "Pet Shope", 
+        "description": "APP | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/animal-cart"
+      },
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/video-palye-ui.png", 
+        "title": "Video Player APP", 
+        "description": "A project showcasing innovative ideas.", 
+        "link": "https://github.com/mohammedshamseerpvofficial/mokz-video-app"
+      },
+      { 
+        "image": "https://raw.githubusercontent.com/mohammedshamseerpvofficial/host-images/refs/heads/main/image/voic-asistent.png", 
+        "title": "Voice Assistant App", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://alina-ai.netlify.app/#/"
+      },
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/social-media-app-ui.jpg", 
+        "title": "Social media app", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://shamseerpv.netlify.app/#/"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/pc-react.png?raw=true", 
+        "title": "Online Computer Web", 
+        "description": "WEB | React js", 
+        "link": "https://my-pc.netlify.app/"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/vidoe-to-image-snap.png?raw=true", 
+        "title": "Video image generator", 
+        "description": "WEB | HTML CSS JS", 
+        "link": "https://devshamseer.github.io/vedio_image_genarater_ai/"
+      },
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/qrcode-scanner.jpg", 
+        "title": "QR Code Scanner", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://mohammedshamseerpvofficial.github.io/QRScaner-flutter-web/host/#/"
+      },
+      { 
+        "image": "https://user-images.githubusercontent.com/61475220/96146654-280b4a80-0f24-11eb-86ea-9c2c6e5d6517.png", 
+        "title": "Netflix Clone Web", 
+        "description": "WEB | React js", 
+        "link": "https://mynete.netlify.app/"
+      },
+      { 
+        "image": "https://mohammedshamseerpv.github.io/host-images/image/ma2.jpeg", 
+        "title": "Matrimony", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/matrimony-app/tree/main"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/mokz-songs.png?raw=true", 
+        "title": "Music player App", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7085879604187435008"
+      },
+      { 
+        "image": "https://raw.githubusercontent.com/mohammedshamseerpvofficial/host-images/refs/heads/main/image/docker-pc.png", 
+        "title": "Cloud PC Linux", 
+        "description": "WEB | Docker Node js", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7147572477852856320"
+      },
+      { 
+        "image": "https://raw.githubusercontent.com/mohammedshamseerpvofficial/host-images/refs/heads/main/image/spotyfi.jpg", 
+        "title": "Spotify Clone", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7244937568079806466"
+      },
+      { 
+        "image": "https://i.ytimg.com/vi/JYWezI9BN0s/maxresdefault.jpg", 
+        "title": "Youtube clone", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/youtube"
+      },
+
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/zomato.jpg?raw=true", 
+        "title": "Zomato Clone", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/zomato-clone"
+      },
+      { 
+        "image": "https://play-lh.googleusercontent.com/ymXDmYihTOzgPDddKSvZRKzXkboAapBF2yoFIeQBaWSAJmC9IUpSPKgvfaAgS5yFxQ", 
+        "title": "Swiggy Clone", 
+        "description": "APP & WEB | Flutter", 
+        "link": "https://github.com/mohammedshamseerpvofficial/swiggy-clone"
+      },
+      { 
+        "image": " https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/zarx-studio-1.png?raw=true", 
+        "title": "Zarax-Studio", 
+        "description": "CLI | Nodejs CLI FFmeg", 
+        "link": "https://mohammedshamseerpv.medium.com/introducing-zarax-studio-your-ultimate-video-downloader-1b855737ec79"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/python-hand-led.png?raw=true", 
+        "title": "Hand Gesture Controlled LEDs with Arduino & PY", 
+        "description": "Python | OpenCV | Arduino", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7207336374889324544"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/python-hand-keybord.png?raw=true", 
+        "title": "Keyboard Controlled By Hand Gestures", 
+        "description": "Python | OpenCV ", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7207701410774147072"
+      },
+
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/flutter-emd.png?raw=true", 
+        "title": "Flutter Embedded Arduino Esp ", 
+        "description": "Flutter | Arduino", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7216655149828571136"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/streeming-vidoePlayer.png?raw=true", 
+        "title": "Flutter streaming video player (RTSP,M3U8)", 
+        "description": "Flutter", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7086916008396947457"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/flip-book.png?raw=true", 
+        "title": "Advanced Flip Book Generation Node.js", 
+        "description": "Flutter", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7187490632351772672"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/watch-monitor.gif?raw=true", 
+        "title": "Smart Watch Debugging", 
+        "description": "Bluetooth | Flutter ", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7266155375983247360"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/swager-ui.png?raw=true", 
+        "title": "Generate Swagger Api Doc", 
+        "description": "Nodejs | Swagger UI ", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7266340745928679424"
+      },
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/co-api-doc.png?raw=true", 
+        "title": "Custom API Documentation Generator 🛠️", 
+        "description": "Nodejs", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7266352099393716224"
+      },
+
+      { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/Website-Scraping.png?raw=true", 
+        "title": "Website Scraper ⚙️", 
+        "description": "Nodejs", 
+        "link": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7266410626338480128"
+      },
+      { 
+        "image": "https://projact-showcase.netlify.app/assets/img/clock%20D.png", 
+        "title": "Analog Clock", 
+        "description": "HTML | CSS | JS", 
+        "link": "https://clokui.netlify.app/"
+      },
+              { 
+        "image": "https://github.com/mohammedshamseerpvofficial/host-images/blob/main/image/terminl-ui.png?raw=true", 
+        "title": "Terminal-Style GUI 🖥️", 
+        "description": "HTML | CSS | JS", 
+        "link": "https://mohammed-shamseerpv.netlify.app/terminal_ui.html"
+      }
+      
+      
+     
+      
+    ]
+  }
